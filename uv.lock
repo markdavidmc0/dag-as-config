@@ -207,6 +207,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/2e/aa/fdc3f987c336d665f2346bdde6d69c93e2715652d3867a61902683d51ace/apache_airflow-3.1.3-py3-none-any.whl", hash = "sha256:e6358205c59f5ef2cca5f4a958b23bbedd75669acf61131f52be029138370914", size = 12661, upload_time = "2025-11-14T13:43:16.338Z" },
 ]
 
+[package.optional-dependencies]
+snowflake = [
+    { name = "apache-airflow-providers-snowflake" },
+]
+
 [[package]]
 name = "apache-airflow-core"
 version = "3.1.3"
@@ -779,7 +784,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "airflow-provider-kafka" },
-    { name = "apache-airflow" },
+    { name = "apache-airflow", extra = ["snowflake"] },
     { name = "apache-airflow-providers-amazon" },
     { name = "apache-airflow-providers-snowflake" },
     { name = "boto3" },
@@ -795,7 +800,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "airflow-provider-kafka", specifier = ">=0.2.5" },
-    { name = "apache-airflow", specifier = ">=3.1.3" },
+    { name = "apache-airflow", extras = ["snowflake"], specifier = ">=3.1.3" },
     { name = "apache-airflow-providers-amazon", specifier = ">=9.17.0" },
     { name = "apache-airflow-providers-snowflake", specifier = ">=6.7.0" },
     { name = "boto3", specifier = ">=1.42.0" },

@@ -5,7 +5,7 @@
         "reportMissingImports": "none"
     },
     "python.analysis.extraPaths": [
-        "${workspaceFolder}/src"
+        "${workspaceFolder}/dags"
     ],
     "python.envFile": "${workspaceFolder}/.env",
     "python.terminal.activateEnvironment": true,

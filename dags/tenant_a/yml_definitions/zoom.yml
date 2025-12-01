@@ -1,0 +1,33 @@
+# The top-level key is the DAG ID
+customer_summary_dag_yaml:
+  # Standard DAG arguments
+  default_args:
+    owner: airflow
+    # Note: YAML needs a static start date. Update this to a relevant date.
+    start_date: 2023-01-01
+    retries: 1
+    retry_delay_sec: 300
+  schedule_interval: '@daily'
+  catchup: false
+  description: "A Snowflake summary DAG generated via dag-factory YAML."
+
+  # CRITICAL: This needs to be the ABSOLUTE path in your Airflow environment
+  # where the 'sql' folder is located.
+  # If running in Docker, this might be /opt/airflow/dags/sql
+  template_searchpath: ["/usr/local/airflow/dags/tenant_a/sql/zoom"]
+
+  tasks:
+    create_customer_summary_task:
+      # Full path to the operator class
+      operator: airflow.providers.snowflake.operators.snowflake.SnowflakeOperator
+      # Operator specific arguments fit directly under the task key
+      snowflake_conn_id: my_snowflake_conn
+      warehouse: COMPUTE_WH
+      database: MY_DB
+      schema: ANALYTICS
+      # Because template_searchpath is set above, we just need the filename here
+      sql: create_customer_summary.sql
+      # Parameters passed to the Jinja template in the SQL file
+      params:
+        source_table: raw.orders
+        target_table: analytics.customer_summary_daily_yaml
